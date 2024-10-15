@@ -5,7 +5,7 @@ current_date=$(date +%Y%m%d_%H%M)
 echo "
 SELECT DISTINCT
     u.id AS ID,
-    28 AS REGION_ID, -- Статическое значение региона
+    gp.id AS REGION_ID, -- Статическое значение региона
     FROM_UNIXTIME(u.contract_date, '%Y-%m-%d %H:%i:%s') AS CONTRACT_DATE, -- Преобразование UNIX времени в читаемый формат
     u.contract AS CONTRACT,
     FROM_UNIXTIME(u.contract_date, '%Y-%m-%d %H:%i:%s') AS ACTUAL_FROM, -- Дата заключения контракта
