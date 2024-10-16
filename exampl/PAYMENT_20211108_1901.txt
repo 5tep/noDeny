@@ -1,0 +1,67 @@
+PAYMENT_TYPE;PAY_TYPE_ID;PAYMENT_DATE;AMOUNT;AMOUNT_CURRENCY;PHONE_NUMBER;ACCOUNT;INTERNAL_ID1;INTERNAL_ID2;BANK_ACCOUNT;BANK_NAME;EXPRESS_CARD_NUMBER;TERMINAL_ID;TERMINAL_NUMBER;LATITUDE;LONGITUDE;PROJECTION_TYPE;CENTER_ID;DONATED_PHONE_NUMBER;DONATED_ACCOUNT;DONATED_INTERNAL_ID1;DONATED_INTERNAL_ID2;CARD_NUMBER;PAY_PARAMS;PERSON_RECIEVED;BANK_DIVISION_NAME;BANK_CARD_ID;ADDRESS_TYPE_ID;ADDRESS_TYPE;ZIP;COUNTRY;REGION;ZONE;CITY;STREET;BUILDING;BUILD_SECT;APARTMENT;UNSTRUCT_INFO;REGION_ID
+86;5;2009-09-28 00:00:00;100.00;;5666568963;000037;84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;28
+86;5;2009-09-29 00:00:00;100.00;;89098848856;000045;99;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;28
+86;5;2009-09-30 00:00:00;1000.00;;36473989;000049;110;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;28
+
+
+# Получение текущей даты
+current_date=$(date +%Y%m%d_%H%M)
+
+# Формирование MySQL-запроса с выводом в файл
+echo "
+SELECT 
+    86 AS PAYMENT_TYPE,  -- Задано статически
+    `type` AS PAY_TYPE_ID,
+    FROM_UNIXTIME(`time`, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
+    `cash` AS AMOUNT,
+    '' AS AMOUNT_CURRENCY,  -- Пустое поле
+    '' AS PHONE_NUMBER,  -- Информация о номере телефона отсутствует в этой таблице
+    `mid`, AS ACCOUNT,  -- Пример форматирования номера счета
+    '' AS INTERNAL_ID1,
+    '' AS INTERNAL_ID2,
+    '' AS BANK_ACCOUNT,  -- Пустое поле
+    '' AS BANK_NAME,  -- Пустое поле
+    '' AS EXPRESS_CARD_NUMBER,  -- Пустое поле
+    '' AS TERMINAL_ID,  -- Пустое поле
+    '' AS TERMINAL_NUMBER,  -- Пустое поле
+    '' AS LATITUDE,  -- Пустое поле
+    '' AS LONGITUDE,  -- Пустое поле
+    '' AS PROJECTION_TYPE,  -- Пустое поле
+    '' AS CENTER_ID,  -- Пустое поле
+    '' AS DONATED_PHONE_NUMBER,  -- Пустое поле
+    '' AS DONATED_ACCOUNT,  -- Пустое поле
+    '' AS DONATED_INTERNAL_ID1,  -- Пустое поле
+    '' AS DONATED_INTERNAL_ID2,  -- Пустое поле
+    '' AS CARD_NUMBER,  -- Пустое поле
+    '' AS PAY_PARAMS,  -- Пустое поле
+    '' AS PERSON_RECIEVED,  -- Пустое поле
+    '' AS BANK_DIVISION_NAME,  -- Пустое поле
+    '' AS BANK_CARD_ID,  -- Пустое поле
+    '' AS ADDRESS_TYPE_ID,  -- Пустое поле
+    '' AS ADDRESS_TYPE,  -- Пустое поле
+    '' AS ZIP,  -- Пустое поле
+    'Российская Федерация' AS COUNTRY,  -- Пример статического значения
+    '' AS REGION,  -- Пустое поле
+    '' AS ZONE,  -- Пустое поле
+    '' AS CITY,  -- Пустое поле
+    '' AS STREET,  -- Пустое поле
+    '' AS BUILDING,  -- Пустое поле
+    '' AS BUILD_SECT,  -- Пустое поле
+    '' AS APARTMENT,  -- Пустое поле
+    '' AS UNSTRUCT_INFO,  -- Пустое поле
+    18 AS REGION_ID  -- Пример статического значения
+INTO OUTFILE '/var/lib/mysql-files/PAYMENT_$current_date.txt'
+FIELDS TERMINATED BY ';' 
+OPTIONALLY ENCLOSED BY ''
+LINES TERMINATED BY '\n'
+FROM 
+    pays
+WHERE mid NOT IN (0,1) and type = 10 and category = 600;
+" > /var/lib/mysql-files/query.sql
+
+# Выполнение завроса в базе данных
+mysql -u username -p%пароль% big_nodeny < /var/lib/mysql-files/query.sql
+
+# Перенос файлов, подчищаем за собой
+mv -f /var/lib/mysql-files/PAYMENT* /path/to/your
+rm -f /var/lib/mysql-files/query.sql

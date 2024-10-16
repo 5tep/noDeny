@@ -1,0 +1,83 @@
+REGION_ID;VOIP_ID;BEGIN_TIME;END_TIME;CLIENT_IPV4;CLIENT_IPV6;CLIENT_IP_PORT;SERVER_IPV4;SERVER_IPV6;SERVER_IP_PORT;PROTOCOL_CODE;POINT_ID;SESSION_ID;CONFERENCE_ID;DURATION;ORIGINATOR_NAME;CALL_TYPE_ID;CALLING_ORIGINAL_NUMBER;CALLING_TRANSLATED_NUMBER;CALLING_E164_NUMBER;CALLED_ORIGINAL_NUMBER;CALLED_TRANSLATED_NUMBER;CALLED_E164_NUMBER;IN_BYTES;OUT_BYTES;FAX;TERM_CAUSE;INBOUND_BUNCH;INBOUND_MAC;INBOUND_VPI;INBOUND_VCI;OUTBOUND_BUNCH;OUTBOUND_MAC;OUTBOUND_VPI;OUTBOUND_VCI;VOIP_PROTOCOL;SUPPLEMENT_SERVICE_ID;ABONENT_ID;NAT_IP4;NAT_IP6;NAT_PORT;LOC_TYPE;ML_LAC;ML_CELL;ML_TA;WL_CELL;WL_MAC;GL_LAT;GL_LONG;GL_PROJ_TYPE;LOC_IP_TYPE;LOC_IPV4;LOC_IPV6;LOC_IP_PORT;VOIP_EVENT;DATA_CONTENT_ID;GATEWAY_IP4;GATEWAY_IP6
+28;345;02.12.2021 10:46:47;02.12.2021 11:22:24;AB16D488;;13C4;;;;5061;;asbcYYfcbZzsC@10.160.109.106;;2126;;4;79383371541;79383371541;79383371541;79140004699;79140004699;79140004699;;;N;10000;68;;;;62;;;;0;0;4452436;;;;0;5258;99433484;;;;;;0;;;;;0;;;
+28;2345;02.12.2021 11:25:59;02.12.2021 11:26:19;B211CC6A;;13C4;;;;5061;;lb3fqttfafq3ircmsgaola1slqqpocba@10.18.5.64;;14;;5;79167671872;79167671872;79167671872;79957353786;79957353786;79957353786;;;N;10000;593;;;;32;;;;0;0;1693138;;;;0;;;;;;;;0;;;;;1;;B9AE8024;
+28;124;02.12.2021 11:19:34;;5A97565A;;13C4;;;;5061;;9a3titnquq1dt1suaa3ndttturk1ktrn@10.18.5.64;;0;;35;79629150226;79629150226;79629150226;79809294683;79809294683;79809294683;;;N;10486;300;;;;68;;;;0;0;971238;;;;2;49801;7117272;;;;57.1140757;65.5616633;0;;;;;1;;B9AE8024;
+
+# Получение текущей даты
+current_date=$(date +%Y%m%d_%H%M)
+
+# Формирование MySQL-запроса с выводом в файл
+echo "
+SELECT
+    18 AS REGION_ID,                        -- Статическое значение для REGION_ID
+    z.mid AS VOIP_ID,                       -- Поле mid как VOIP_ID
+    FROM_UNIXTIME(z.time) AS BEGIN_TIME,    -- Начальное время (конвертация Unix time)
+    '' AS END_TIME,                         -- Конец времени (пустое, так как в таблице нет)
+    INET_NTOA(z.ip) AS CLIENT_IPV4,         -- Преобразование IP из числа в IPv4
+    '' AS CLIENT_IPV6,                      -- Клиентский IPv6 (пустое, так как нет данных)
+    z.port AS CLIENT_IP_PORT,               -- Порт клиента
+    '' AS SERVER_IPV4,                      -- Серверный IPv4 (пустое)
+    '' AS SERVER_IPV6,                      -- Серверный IPv6 (пустое)
+    '' AS SERVER_IP_PORT,                   -- Серверный порт (пустое)
+    z.proto AS PROTOCOL_CODE,               -- Протокол
+    '' AS POINT_ID,                         -- Пустое поле
+    '' AS SESSION_ID,                       -- Пустое поле
+    '' AS CONFERENCE_ID,                    -- Пустое поле
+    '' AS DURATION,                         -- Длительность (можно рассчитать, если есть данные о сессиях)
+    '' AS ORIGINATOR_NAME,                  -- Пустое поле
+    '' AS CALL_TYPE_ID,                     -- Пустое поле
+    '' AS CALLING_ORIGINAL_NUMBER,          -- Пустое поле
+    '' AS CALLING_TRANSLATED_NUMBER,        -- Пустое поле
+    '' AS CALLING_E164_NUMBER,              -- Пустое поле
+    '' AS CALLED_ORIGINAL_NUMBER,           -- Пустое поле
+    '' AS CALLED_TRANSLATED_NUMBER,         -- Пустое поле
+    '' AS CALLED_E164_NUMBER,               -- Пустое поле
+    z.bytes AS IN_BYTES,                    -- Переданные байты (IN_BYTES)
+    '' AS OUT_BYTES,                         -- OUT_BYTES отсутствуют, установим 0
+    '' AS FAX,                              -- Пустое поле
+    '' AS TERM_CAUSE,                       -- Пустое поле
+    '' AS INBOUND_BUNCH,                 -- Статическое значение
+    '' AS INBOUND_MAC,                      -- Пустое поле
+    '' AS INBOUND_VPI,                      -- Пустое поле
+    '' AS INBOUND_VCI,                      -- Пустое поле
+    '' AS OUTBOUND_BUNCH,                   -- Пустое поле
+    '' AS OUTBOUND_MAC,                     -- Пустое поле
+    '' AS OUTBOUND_VPI,                     -- Пустое поле
+    '' AS OUTBOUND_VCI,                     -- Пустое поле
+    '' AS VOIP_PROTOCOL,                     -- Статическое значение
+    '' AS SUPPLEMENT_SERVICE_ID,             -- Статическое значение
+    z.mid AS ABONENT_ID,                    -- ID абонента
+    '' AS NAT_IP4,                          -- Пустое поле
+    '' AS NAT_IP6,                          -- Пустое поле
+    '' AS NAT_PORT,                         -- Пустое поле
+    '' AS LOC_TYPE,                          -- Статическое значение
+    '' AS ML_LAC,                           -- Пустое поле
+    '' AS ML_CELL,                          -- Пустое поле
+    '' AS ML_TA,                            -- Пустое поле
+    '' AS WL_CELL,                          -- Пустое поле
+    '' AS WL_MAC,                           -- Пустое поле
+    '' AS GL_LAT,                           -- Пустое поле
+    '' AS GL_LONG,                          -- Пустое поле
+    '' AS GL_PROJ_TYPE,                      -- Статическое значение
+    '' AS LOC_IP_TYPE,                       -- Статическое значение
+    '' AS LOC_IPV4,                         -- Пустое поле
+    '' AS LOC_IPV6,                         -- Пустое поле
+    '' AS LOC_IP_PORT,                      -- Пустое поле
+    '' AS VOIP_EVENT,                        -- Статическое значение
+    '' AS DATA_CONTENT_ID,                   -- Статическое значение
+    '' AS GATEWAY_IP4,                      -- Пустое поле
+    '' AS GATEWAY_IP6                       -- Пустое поле
+INTO OUTFILE '/var/lib/mysql-files/CONNECTION_VOIP_$current_date.txt'
+FIELDS TERMINATED BY ';' 
+OPTIONALLY ENCLOSED BY ''
+LINES TERMINATED BY '\n'
+FROM 
+    z2022x8x11 z;
+" > /var/lib/mysql-files/query.sql
+
+# Выполнение завроса в базе данных
+mysql -u username -p%пароль% big_nodeny < /var/lib/mysql-files/query.sql
+
+# Перенос файлов, подчищаем за собой
+mv -f /var/lib/mysql-files/CONNECTION_VOIP* /path/to/your
+rm -f /var/lib/mysql-files/query.sql
