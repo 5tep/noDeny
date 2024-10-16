@@ -17,8 +17,8 @@ SELECT DISTINCT
     '' AS INITIAL_NAME, -- Поле пустое
     u.fio AS UNSTRUCT_NAME, -- Используем FIO как неструктурированное имя
     '' AS BIRTH_DATE, -- Поле Дата рождения
-    '' AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
-    '' AS IDENT_CARD_TYPE, -- Поле Тип документа
+    1 AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
+    1 AS IDENT_CARD_TYPE, -- Поле Тип документа
     dv_serial.field_value AS IDENT_CARD_SERIAL, -- Поле серия паспорта
     dv_number.field_value AS IDENT_CARD_NUMBER, -- Поле номер паспорта
     dv_descript.field_value AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан

@@ -4,8 +4,8 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
-    p.office AS PAYMENT_TYPE,  -- Задано статически
-    p.type AS PAY_TYPE_ID,
+    1 AS PAYMENT_TYPE,  -- Задано статически
+    1 AS PAY_TYPE_ID,
     FROM_UNIXTIME(time, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
     p.cash AS AMOUNT,
     '' AS AMOUNT_CURRENCY,  -- Пустое поле

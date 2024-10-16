@@ -4,8 +4,8 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
-    p.office AS PAYMENT_TYPE,  -- Задано статически
-    p.type AS PAY_TYPE_ID,
+    1 AS PAYMENT_TYPE,  -- Задано статически
+    1 AS PAY_TYPE_ID,
     FROM_UNIXTIME(time, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
     p.cash AS AMOUNT,
     '' AS AMOUNT_CURRENCY,  -- Пустое поле
@@ -51,7 +51,9 @@ LINES TERMINATED BY '\n'
 FROM 
     pays p, users u, user_grppack gp
 WHERE p.mid = u.id AND gp.pack_grps like CONCAT('%,', u.grp, ',%') AND u.id = 8010
-    AND gp.id in (13,18) and p.mid NOT IN (0,1) and type = 10 AND p.category = 600;
+    AND gp.id in (13,18) and p.mid NOT IN (0,1) and type = 10 AND p.category = 600
+    AND FROM_UNIXTIME(p.time) BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()
+    ;
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных

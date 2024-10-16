@@ -29,7 +29,9 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM 
-    p_switch s;
+    p_switch s
+    AND FROM_UNIXTIME(s.date) BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()
+    ;
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных

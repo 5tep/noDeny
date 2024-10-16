@@ -1,14 +1,14 @@
 # Получение текущей даты
 current_date=$(date +%Y%m%d_%H%M)
-
+current_table=$(date +x%Yx%mx%d --date='yesterday')
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT
-    18 AS REGION_ID,                        -- Статическое значение для REGION_ID
-    z.mid AS VOIP_ID,                       -- Поле mid как VOIP_ID
-    FROM_UNIXTIME(z.time) AS BEGIN_TIME,    -- Начальное время (конвертация Unix time)
+    (SELECT max(ug.id) from user_grppack ug, users u where ug.pack_grps like CONCAT('%,', u.grp, ',%') AND ug.id in (13,18)) AS REGION_ID,                        -- Статическое значение для REGION_ID
+    mid AS VOIP_ID,                       -- Поле mid как VOIP_ID
+    FROM_UNIXTIME(time) AS BEGIN_TIME,    -- Начальное время (конвертация Unix time)
     '' AS END_TIME,                         -- Конец времени (пустое, так как в таблице нет)
-    INET_NTOA(z.ip) AS CLIENT_IPV4,         -- Преобразование IP из числа в IPv4
+    INET_NTOA(ip) AS CLIENT_IPV4,         -- Преобразование IP из числа в IPv4
     '' AS CLIENT_IPV6,                      -- Клиентский IPv6 (пустое, так как нет данных)
     '' AS CLIENT_IP_PORT,               -- Порт клиента
     '' AS SERVER_IPV4,                      -- Серверный IPv4 (пустое)
@@ -27,7 +27,7 @@ SELECT
     '' AS CALLED_ORIGINAL_NUMBER,           -- Пустое поле
     '' AS CALLED_TRANSLATED_NUMBER,         -- Пустое поле
     '' AS CALLED_E164_NUMBER,               -- Пустое поле
-    z.bytes AS IN_BYTES,                    -- Переданные байты (IN_BYTES)
+    bytes AS IN_BYTES,                    -- Переданные байты (IN_BYTES)
     '' AS OUT_BYTES,                         -- OUT_BYTES отсутствуют, установим 0
     '' AS FAX,                              -- Пустое поле
     '' AS TERM_CAUSE,                       -- Пустое поле
@@ -41,7 +41,7 @@ SELECT
     '' AS OUTBOUND_VCI,                     -- Пустое поле
     '' AS VOIP_PROTOCOL,                     -- Статическое значение
     '' AS SUPPLEMENT_SERVICE_ID,             -- Статическое значение
-    z.mid AS ABONENT_ID,                    -- ID абонента
+    mid AS ABONENT_ID,                    -- ID абонента
     '' AS NAT_IP4,                          -- Пустое поле
     '' AS NAT_IP6,                          -- Пустое поле
     '' AS NAT_PORT,                         -- Пустое поле
@@ -67,7 +67,7 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM 
-    v2022x8x11 z;
+    $current_table;
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных
