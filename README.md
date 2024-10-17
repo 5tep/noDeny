@@ -49,7 +49,7 @@ file=$(echo "ABONENT_ADDRESS_$current_date.txt")
 sleep 1;
 echo -en "open ftp://'USER:PASSWORD'@HOST\n";
 sleep 5;
-echo -en "lcd /path/from\n";
+echo -en "lcd /home/ma43152/COPM/files\n";
 sleep 1;
 #echo -en "cd /path/to\n";
 sleep 1;

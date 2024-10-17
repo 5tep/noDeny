@@ -35,8 +35,8 @@ FROM
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных
-mysql -u username -p%пароль% big_nodeny < /var/lib/mysql-files/query.sql
+mysql -u asdf -ptD44vTG59d big_nodeny < /var/lib/mysql-files/query.sql
 
 # Перенос файлов, подчищаем за собой
-mv -f /var/lib/mysql-files/COMMUTATORS_* /path/to/your
+mv -f /var/lib/mysql-files/COMMUTATORS_* /home/ma43152/COPM/files
 rm -f /var/lib/mysql-files/query.sql

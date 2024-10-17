@@ -57,8 +57,8 @@ WHERE p.mid = u.id AND gp.pack_grps like CONCAT('%,', u.grp, ',%') AND u.id = 80
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных
-mysql -u username -p%пароль% big_nodeny < /var/lib/mysql-files/query.sql
+mysql -u asdf -ptD44vTG59d big_nodeny < /var/lib/mysql-files/query.sql
 
 # Перенос файлов, подчищаем за собой
-mv -f /var/lib/mysql-files/PAYMENT* /path/to/your
+mv -f /var/lib/mysql-files/PAYMENT* /home/ma43152/COPM/files
 rm -f /var/lib/mysql-files/query.sql
