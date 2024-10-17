@@ -42,21 +42,3 @@ PAY_TYPE_ID
 Структура выгрузок данных по соединениям абонентов для хранилища
 Табл. 44  Структура выгрузок данных о VoIP соединениях абонентов (CONNECTION_VOIP)
 
-# Выгрузка на ftp
-# Пример длязагрузки файла ABONENT_ADDRESS
-file=$(echo "ABONENT_ADDRESS_$current_date.txt")
-(
-sleep 1;
-echo -en "open ftp://'USER:PASSWORD'@HOST\n";
-sleep 5;
-echo -en "lcd /path/from\n";
-sleep 1;
-#echo -en "cd /path/to\n";
-sleep 1;
-echo -en "put ${file}\n";
-sleep 1
-echo -en "exit\n";
-sleep 1;
-# ) | sshpass -p PASSWORD ftp USER@HOST >> ftplog.log
-) | lftp >> ftplog.log
-# возможно нужн одоустановить lftp или sshpass (тогда авторизацию не нужна, команда open)
