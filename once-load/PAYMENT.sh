@@ -50,7 +50,7 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM 
     pays p, users u, user_grppack gp
-WHERE p.mid = u.id AND gp.pack_grps like CONCAT('%,', u.grp, ',%') AND u.id = 8010
+WHERE p.mid = u.id AND gp.pack_grps like CONCAT('%,', u.grp, ',%')
     AND gp.id in (13,18) and p.mid NOT IN (0,1) and type = 10 AND p.category = 600;
 " > /var/lib/mysql-files/query.sql
 
