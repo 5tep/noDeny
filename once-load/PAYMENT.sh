@@ -46,7 +46,7 @@ SELECT
     'REGION_ID'
 UNION ALL
 SELECT 
-    1 AS PAYMENT_TYPE,  -- Задано статически
+    83 AS PAYMENT_TYPE,  -- Задано статически
     1 AS PAY_TYPE_ID,
     FROM_UNIXTIME(time, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
     p.cash AS AMOUNT,
