@@ -2,7 +2,25 @@
 current_date=$(date +%Y%m%d_%H%M)
 
 # Формирование MySQL-запроса с выводом в файл
-echo "
+echo "SELECT 
+    'ABONENT_ID',
+    'REGION_ID',
+    'ADDRESS_TYPE_ID',
+    'ADDRESS_TYPE',
+    'ZIP',
+    'COUNTRY',
+    'REGION',
+    'ZONE',
+    'CITY',
+    'STREET',
+    'BUILDING',
+    'BUILD_SECT',
+    'APARTMENT',
+    'BEGIN_TIME',
+    'END_TIME',
+    'INTERNAL_ID1',
+    'INTERNAL_ID2'
+UNION ALL
 SELECT DISTINCT 
     u.id AS ABONENT_ID,
     gp.id AS REGION_ID,
