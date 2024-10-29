@@ -4,6 +4,14 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
+    'ID', 
+    'BEGIN_TIME',  
+    'END_TIME',    
+    'DESCRIPTION',       
+    'MCC',                         
+    'MNC'                         
+UNION ALL
+SELECT 
     u.id AS ID,
     '2022-01-01 00:00:00' AS BEGIN_TIME,  --  дата начала
     '2099-12-31 23:59:59' AS END_TIME,    --  дата окончания
