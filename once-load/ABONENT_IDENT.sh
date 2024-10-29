@@ -4,6 +4,15 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
+    'ABONENT_ID', 'REGION_ID', 'IDENT_TYPE', 'PHONE', 'INTERNAL_NUMBER', 'IMSI', 'IMEI', 'ICC', 'MIN', 'ESN', 
+    'EQUIPMENT_TYPE', 'MAC', 'VPI', 'VCI', 'LOGIN', 'E_MAIL', 'PIN', 'USER_DOMAIN', 'RESERVED', 
+    'ORIGINATOR_NAME', 'IP_TYPE', 'IPV4', 'IPV6', 'IP_MASK_TYPE', 'IPV4_MASK', 'IPV6_MASK', 
+    'IP_RANGE_START', 'IP_RANGE_END', 'INTERNAL_ID1', 'INTERNAL_ID2', 'BEGIN_TIME', 'END_TIME', 
+    'LINE_OBJECT', 'LINE_CROSS', 'LINE_BLOCK', 'LINE_PAIR', 'LINE_RESERVED', 'LOC_TYPE', 
+    'LOC_LAC', 'LOC_CELL', 'LOC_TA', 'LOC_CELL_WIRELESS', 'LOC_MAC', 'LOC_LATITUDE', 'LOC_LONGITUDE', 
+    'LOC_PROJECTION_TYPE', 'LOC_IP_TYPE', 'LOC_IPV4', 'LOC_IPV6', 'LOC_IP_PORT'
+UNION ALL
+SELECT 
     u.id AS ABONENT_ID, 
     gp.id AS REGION_ID, -- Статическое значение региона
     '' AS IDENT_TYPE, -- Статическое значение идентификационного типа
