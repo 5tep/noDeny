@@ -4,6 +4,16 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
+    'ABONENT_ID', 
+    'REGION_ID', 
+    'ID', 
+    'BEGIN_TIME', 
+    'END_TIME', 
+    'PARAMETER', 
+    'INTERNAL_ID1', 
+    'INTERNAL_ID2'
+UNION ALL
+SELECT 
     u.id AS ABONENT_ID, 
     gp.id AS REGION_ID, 
     p.id AS ID, 
