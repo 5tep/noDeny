@@ -4,6 +4,14 @@ current_date=$(date +%Y%m%d_%H%M)
 # Формирование MySQL-запроса с выводом в файл
 echo "
 SELECT 
+    'ID' AS ID,
+    'MNEMONIC' AS MNEMONIC,
+    'BEGIN_TIME' AS BEGIN_TIME,
+    'END_TIME' AS END_TIME,
+    'DESCRIPTION' AS DESCRIPTION,
+    'REGION_ID' AS REGION_ID
+UNION ALL
+SELECT 
     id AS ID,
     name AS MNEMONIC,
     '2008-01-02 00:00:00' AS BEGIN_TIME,
