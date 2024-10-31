@@ -12,9 +12,9 @@ SELECT
     'MNC'                         
 UNION ALL
 SELECT 
-    u.id AS ID,
+    4 AS ID,
     '2022-01-01 00:00:00' AS BEGIN_TIME,  --  дата начала
-    '2099-12-31 23:59:59' AS END_TIME,    --  дата окончания
+    '2049-12-31 23:59:59' AS END_TIME,    --  дата окончания
     u.pack_name AS DESCRIPTION,        -- Описание
     '' AS MCC,                         -- Значение MCC
     '' AS MNC                           -- MNC не указан
@@ -25,7 +25,7 @@ LINES TERMINATED BY '\n'
 FROM 
     user_grppack u
 WHERE 
-    u.id in (13,18);
+    u.id in (18);
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных

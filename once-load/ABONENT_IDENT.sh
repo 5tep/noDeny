@@ -14,8 +14,8 @@ SELECT
 UNION ALL
 SELECT 
     u.id AS ABONENT_ID, 
-    gp.id AS REGION_ID, -- Статическое значение региона
-    '' AS IDENT_TYPE, -- Статическое значение идентификационного типа
+    4 AS REGION_ID, -- Статическое значение региона
+    5 AS IDENT_TYPE, -- Статическое значение идентификационного типа
     '' AS PHONE, -- Поле пустое
     '' AS INTERNAL_NUMBER, -- Поле пустое
     '' AS IMSI, -- Поле пустое
@@ -23,7 +23,7 @@ SELECT
     '' AS ICC, -- Поле пустое
     '' AS MIN, -- Поле пустое
     '' AS ESN, -- Поле пустое
-    '' AS EQUIPMENT_TYPE, -- Поле пустое
+    0 AS EQUIPMENT_TYPE, -- Поле пустое
     u.mac AS MAC, -- MAC-адрес пользователя, если он есть
     '' AS VPI, -- Поле пустое
     '' AS VCI, -- Поле пустое
@@ -41,8 +41,8 @@ SELECT
     '' AS IPV6_MASK, -- Поле пустое
     '' AS IP_RANGE_START, -- Поле пустое
     '' AS IP_RANGE_END, -- Поле пустое
-    u.id AS INTERNAL_ID1, -- Используем ID пользователя как INTERNAL_ID1
-    u.id AS INTERNAL_ID2, -- Используем ID пользователя как INTERNAL_ID2
+    '' AS INTERNAL_ID1, -- Используем ID пользователя как INTERNAL_ID1
+    '' AS INTERNAL_ID2, -- Используем ID пользователя как INTERNAL_ID2
     FROM_UNIXTIME(u.contract_date, '%Y-%m-%d %H:%i:%s') AS BEGIN_TIME, -- Дата начала контракта
     '2049-12-12 23:59:00' AS END_TIME, -- Статическая дата окончания
     '' AS LINE_OBJECT, -- Поле пустое
