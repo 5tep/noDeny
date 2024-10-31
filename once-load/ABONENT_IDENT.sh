@@ -24,7 +24,7 @@ SELECT
     '' AS MIN, -- Поле пустое
     '' AS ESN, -- Поле пустое
     0 AS EQUIPMENT_TYPE, -- Поле пустое
-    u.mac AS MAC, -- MAC-адрес пользователя, если он есть
+    COALESCE(u.mac, '') AS MAC, -- MAC-адрес пользователя, если он есть
     '' AS VPI, -- Поле пустое
     '' AS VCI, -- Поле пустое
     u.name AS LOGIN, -- Логин пользователя
@@ -41,8 +41,8 @@ SELECT
     '' AS IPV6_MASK, -- Поле пустое
     '' AS IP_RANGE_START, -- Поле пустое
     '' AS IP_RANGE_END, -- Поле пустое
-    '' AS INTERNAL_ID1, -- Используем ID пользователя как INTERNAL_ID1
-    '' AS INTERNAL_ID2, -- Используем ID пользователя как INTERNAL_ID2
+    u.id AS INTERNAL_ID1, -- Используем ID пользователя как INTERNAL_ID1
+    u.id AS INTERNAL_ID2, -- Используем ID пользователя как INTERNAL_ID2
     FROM_UNIXTIME(u.contract_date, '%Y-%m-%d %H:%i:%s') AS BEGIN_TIME, -- Дата начала контракта
     '2049-12-12 23:59:00' AS END_TIME, -- Статическая дата окончания
     '' AS LINE_OBJECT, -- Поле пустое

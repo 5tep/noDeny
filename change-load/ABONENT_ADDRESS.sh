@@ -24,9 +24,9 @@ SELECT
 UNION ALL
 SELECT DISTINCT 
     u.id AS ABONENT_ID,
-    gp.id AS REGION_ID,
-    1 AS ADDRESS_TYPE_ID,  -- Фиксированное значение
-    1 AS ADDRESS_TYPE,     -- Фиксированное значение
+    4 AS REGION_ID,
+    0 AS ADDRESS_TYPE_ID,  -- Фиксированное значение
+    0 AS ADDRESS_TYPE,     -- Фиксированное значение
     '' AS ZIP,             -- Пустое поле, значение не указано
     'Российская Федерация' AS COUNTRY,  -- Статическое значение для страны
     'Херсонская область' AS REGION,    -- Регион из таблицы улиц
@@ -36,9 +36,9 @@ SELECT DISTINCT
     dv_building.field_value AS BUILDING,  -- Номер здания из таблицы dopvalues
     dv_build_sect.field_value AS BUILD_SECT,  -- Секция здания из таблицы dopvalues
     dv_apartment.field_value AS APARTMENT,  -- Номер квартиры из таблицы dopvalues
-   -- CONCAT(', ', p.name_street, ', д. ', dv_building.field_value) AS UNSTRUCT_INFO,  -- Адрес как неструктурированное поле
+    '' AS UNSTRUCT_INFO,  -- Адрес как неструктурированное поле
     FROM_UNIXTIME(u.contract_date) AS BEGIN_TIME,  
-    '2099-12-31 23:59:59' AS END_TIME,    -- Фиксированное значение
+    '2049-12-31 23:59:59' AS END_TIME,    -- Фиксированное значение
     '' AS INTERNAL_ID1,   -- Пустое поле
     '' AS INTERNAL_ID2    -- Пустое поле
 INTO OUTFILE '/var/lib/mysql-files/ABONENT_ADDRESS_$current_date.txt'

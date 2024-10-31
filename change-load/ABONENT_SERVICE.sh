@@ -15,10 +15,10 @@ SELECT
 UNION ALL
 SELECT 
     u.id AS ABONENT_ID, 
-    gp.id AS REGION_ID, 
+    4 AS REGION_ID, 
     p.id AS ID, 
     FROM_UNIXTIME(u.modify_time) AS BEGIN_TIME, 
-    '2099-12-31 23:59:59' AS END_TIME, 
+    '2049-12-31 23:59:59' AS END_TIME, 
     '' AS PARAMETER, 
     u.id AS INTERNAL_ID1, 
     u.id AS INTERNAL_ID2

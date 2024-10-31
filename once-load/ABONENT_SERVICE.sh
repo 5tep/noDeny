@@ -18,8 +18,8 @@ SELECT
     4 AS REGION_ID, 
     p.id AS ID, 
     FROM_UNIXTIME(u.modify_time) AS BEGIN_TIME, 
-    '2049-12-31 23:59:59' AS END_TIME, 
-    '' AS PARAMETER, 
+    '2049-12-31 23:59:00' AS END_TIME, 
+    p.speed AS PARAMETER, 
     u.id AS INTERNAL_ID1, 
     u.id AS INTERNAL_ID2
 INTO OUTFILE '/var/lib/mysql-files/ABONENT_SERVICE_$current_date.txt'
