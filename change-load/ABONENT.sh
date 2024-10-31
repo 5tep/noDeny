@@ -27,9 +27,9 @@ SELECT DISTINCT
     '' AS BIRTH_DATE, -- Поле Дата рождения
     1 AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
     0 AS IDENT_CARD_TYPE, -- Поле Тип документа
-    dv_serial.field_value AS IDENT_CARD_SERIAL, -- Поле серия паспорта
-    dv_number.field_value AS IDENT_CARD_NUMBER, -- Поле номер паспорта
-    dv_descript.field_value AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан
+    COALESCE(dv_serial.field_value, '') AS IDENT_CARD_SERIAL, -- Поле серия паспорта
+    COALESCE(dv_number.field_value, '') AS IDENT_CARD_NUMBER, -- Поле номер паспорта
+    TRIM(REPLACE(REPLACE(REPLACE(COALESCE(dv_descript.field_value, ''), '\n', ' '), '\r', ' '), '\t', ' ')) AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан
     '' AS IDENT_CARD_UNSTRUCT, -- Поле пустое
     '' AS BANK, -- Статическое значение банка
     '' AS BANK_ACCOUNT, -- Статическое значение банковского счета
@@ -39,10 +39,10 @@ SELECT DISTINCT
     '' AS PHONE_FAX, -- Поле пустое
     0 AS STATUS, -- Статическое значение статуса
     FROM_UNIXTIME(u.modify_time, '%Y-%m-%d %H:%i:%s') AS ATTACH, -- Дата последнего изменения
-    '2049-12-31 23:59:59' AS DETACH, -- Статическая дата отсоединения
+    '2049-12-31 23:59:00' AS DETACH, -- Статическая дата отсоединения
     4 AS NETWORK_TYPE, -- Поле пустое
-    '' AS INTERNAL_ID1, -- Поле пустое
-    '' AS INTERNAL_ID2 -- Поле пустое
+    u.id AS INTERNAL_ID1, -- Поле пустое
+    u.id AS INTERNAL_ID2 -- Поле пустое
 INTO OUTFILE '/var/lib/mysql-files/ABONENT_$current_date.txt'
 FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY ''

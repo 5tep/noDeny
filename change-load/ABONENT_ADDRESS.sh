@@ -26,21 +26,21 @@ SELECT DISTINCT
     u.id AS ABONENT_ID,
     4 AS REGION_ID,
     0 AS ADDRESS_TYPE_ID,  -- Фиксированное значение
-    0 AS ADDRESS_TYPE,     -- Фиксированное значение
+    1 AS ADDRESS_TYPE,     -- Фиксированное значение
     '' AS ZIP,             -- Пустое поле, значение не указано
     'Российская Федерация' AS COUNTRY,  -- Статическое значение для страны
     'Херсонская область' AS REGION,    -- Регион из таблицы улиц
     '' AS ZONE,            -- Пустое поле, значение не указано
     gp.pack_name AS CITY,  -- Статическое значение для города
-    (SELECT s.name_street FROM p_street s WHERE s.street = dv_street.field_value) AS STREET,  -- Название улицы из таблицы p_street
-    dv_building.field_value AS BUILDING,  -- Номер здания из таблицы dopvalues
-    dv_build_sect.field_value AS BUILD_SECT,  -- Секция здания из таблицы dopvalues
-    dv_apartment.field_value AS APARTMENT,  -- Номер квартиры из таблицы dopvalues
+    CASE WHEN (SELECT s.name_street FROM p_street s WHERE s.street = dv_street.field_value) IS NULL THEN '' ELSE (SELECT s.name_street FROM p_street s WHERE s.street = dv_street.field_value) END  AS STREET,  -- Название улицы из таблицы p_street
+    COALESCE(dv_building.field_value, '') AS BUILDING,  -- Номер здания из таблицы dopvalues
+    COALESCE(dv_build_sect.field_value, '') AS BUILD_SECT,  -- Секция здания из таблицы dopvalues
+    COALESCE(dv_apartment.field_value, '') AS APARTMENT,  -- Номер квартиры из таблицы dopvalues
     '' AS UNSTRUCT_INFO,  -- Адрес как неструктурированное поле
     FROM_UNIXTIME(u.contract_date) AS BEGIN_TIME,  
-    '2049-12-31 23:59:59' AS END_TIME,    -- Фиксированное значение
-    '' AS INTERNAL_ID1,   -- Пустое поле
-    '' AS INTERNAL_ID2    -- Пустое поле
+    '2049-12-31 23:59:00' AS END_TIME,    -- Фиксированное значение
+    u.id AS INTERNAL_ID1,   -- Пустое поле
+    u.id AS INTERNAL_ID2    -- Пустое поле
 INTO OUTFILE '/var/lib/mysql-files/ABONENT_ADDRESS_$current_date.txt'
 FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY ''

@@ -29,7 +29,7 @@ SELECT DISTINCT
     0 AS IDENT_CARD_TYPE, -- Поле Тип документа
     COALESCE(dv_serial.field_value, '') AS IDENT_CARD_SERIAL, -- Поле серия паспорта
     COALESCE(dv_number.field_value, '') AS IDENT_CARD_NUMBER, -- Поле номер паспорта
-    COALESCE(dv_descript.field_value, '') AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан
+    TRIM(REPLACE(REPLACE(REPLACE(COALESCE(dv_descript.field_value, ''), '\n', ' '), '\r', ' '), '\t', ' ')) AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан
     '' AS IDENT_CARD_UNSTRUCT, -- Поле пустое
     '' AS BANK, -- Статическое значение банка
     '' AS BANK_ACCOUNT, -- Статическое значение банковского счета
@@ -42,7 +42,8 @@ SELECT DISTINCT
     '2049-12-31 23:59:00' AS DETACH, -- Статическая дата отсоединения
     4 AS NETWORK_TYPE, -- Поле пустое
     u.id AS INTERNAL_ID1, -- Поле пустое
-    u.id AS INTERNAL_ID2 -- Поле пустоеINTO OUTFILE '/var/lib/mysql-files/ABONENT_$current_date.txt'
+    u.id AS INTERNAL_ID2 -- Поле пустое
+INTO OUTFILE '/var/lib/mysql-files/ABONENT_$current_date.txt'
 FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'

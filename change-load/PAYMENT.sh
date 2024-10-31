@@ -46,7 +46,7 @@ SELECT
     'REGION_ID'
 UNION ALL
 SELECT 
-    1 AS PAYMENT_TYPE,  -- Задано статически
+    83 AS PAYMENT_TYPE,  -- Задано статически
     1 AS PAY_TYPE_ID,
     FROM_UNIXTIME(time, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
     p.cash AS AMOUNT,
@@ -70,7 +70,7 @@ SELECT
     '' AS DONATED_INTERNAL_ID2,  -- Пустое поле
     '' AS CARD_NUMBER,  -- Пустое поле
     '' AS PAY_PARAMS,  -- Пустое поле
-    '' AS PERSON_RECIEVED,  -- Пустое поле
+    u.fio AS PERSON_RECIEVED,  -- Пустое поле
     '' AS BANK_DIVISION_NAME,  -- Пустое поле
     '' AS BANK_CARD_ID,  -- Пустое поле
     '' AS ADDRESS_TYPE_ID,  -- Пустое поле
@@ -85,7 +85,7 @@ SELECT
     '' AS BUILD_SECT,  -- Пустое поле
     '' AS APARTMENT,  -- Пустое поле
     '' AS UNSTRUCT_INFO,  -- Пустое поле
-    gp.id AS REGION_ID  -- Пример статического значения
+    4 AS REGION_ID  -- Пример статического значения
 INTO OUTFILE '/var/lib/mysql-files/PAYMENT_$current_date.txt'
 FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY ''
