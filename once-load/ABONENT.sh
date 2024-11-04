@@ -26,11 +26,17 @@ SELECT DISTINCT
     u.fio AS UNSTRUCT_NAME, -- Используем FIO как неструктурированное имя
     '' AS BIRTH_DATE, -- Поле Дата рождения
     1 AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
-    0 AS IDENT_CARD_TYPE, -- Поле Тип документа
+    CASE
+    	WHEN COALESCE(dv_serial.field_value, '') = '' THEN 1
+    	ELSE 0
+    END AS IDENT_CARD_TYPE, -- Поле Тип документа
     COALESCE(dv_serial.field_value, '') AS IDENT_CARD_SERIAL, -- Поле серия паспорта
     COALESCE(dv_number.field_value, '') AS IDENT_CARD_NUMBER, -- Поле номер паспорта
     TRIM(REPLACE(REPLACE(REPLACE(COALESCE(dv_descript.field_value, ''), '\n', ' '), '\r', ' '), '\t', ' ')) AS IDENT_CARD_DESCRIPTION, -- Поле Кем, когда выдан
-    '' AS IDENT_CARD_UNSTRUCT, -- Поле пустое
+    CASE
+    	WHEN COALESCE(dv_serial.field_value, '') = '' THEN 'данные отсутствуют'
+    	ELSE ''
+    END  AS IDENT_CARD_UNSTRUCT, -- Поле пустое
     '' AS BANK, -- Статическое значение банка
     '' AS BANK_ACCOUNT, -- Статическое значение банковского счета
     '' AS FULL_NAME, -- Используем FIO как полное имя
