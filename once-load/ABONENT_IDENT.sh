@@ -70,7 +70,7 @@ LINES TERMINATED BY '\n'
 FROM 
     user_grppack gp, users u
 WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')
-    AND gp.id in (13,18)
+    AND gp.id in (13,18) AND u.mac != ''
 ;
 " > /var/lib/mysql-files/query.sql
 
