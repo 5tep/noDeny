@@ -24,7 +24,7 @@ SELECT
     u.id AS INTERNAL_ID2
 INTO OUTFILE '/var/lib/mysql-files/ABONENT_SERVICE_$current_date.txt'
 FIELDS TERMINATED BY ';' 
-OPTIONALLY ENCLOSED BY '\"'
+OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM users u, user_grppack gp, plans2 p
 WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')

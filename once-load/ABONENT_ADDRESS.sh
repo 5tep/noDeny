@@ -16,6 +16,7 @@ echo "SELECT
     'BUILDING',
     'BUILD_SECT',
     'APARTMENT',
+    'UNSTRUCT_INFO',
     'BEGIN_TIME',
     'END_TIME',
     'INTERNAL_ID1',
@@ -55,7 +56,7 @@ FROM
  LEFT JOIN 
      dopvalues dv_apartment ON dv_apartment.dopfield_id = 8 and dv_apartment.parent_id = u.id
 WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')
-    AND gp.id in (13,18) u.contract_date < 2524545103
+    AND gp.id in (13,18) AND u.contract_date < 2524545103
 ;
 " > /var/lib/mysql-files/query.sql
 

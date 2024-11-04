@@ -17,6 +17,7 @@ SELECT
     'BUILDING',
     'BUILD_SECT',
     'APARTMENT',
+    'UNSTRUCT_INFO',
     'BEGIN_TIME',
     'END_TIME',
     'INTERNAL_ID1',
