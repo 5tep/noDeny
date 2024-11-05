@@ -18,14 +18,27 @@ SELECT DISTINCT
     u.id AS CONTRACT,
     FROM_UNIXTIME(u.contract_date, '%Y-%m-%d %H:%i:%s') AS ACTUAL_FROM, -- Дата заключения контракта
     '2049-12-31 23:59:59' AS ACTUAL_TO, -- Статическая дата окончания
-    42 AS ABONENT_TYPE, -- Статическое значение типа абонента
-    1 AS NAME_INFO_TYPE, -- Поле пустое
+    CASE 
+        WHEN u.paket = 107 THEN 43
+        ELSE 42
+    END AS ABONENT_TYPE, -- Статическое значение типа абонента
+    
+    CASE 
+        WHEN u.paket = 107 THEN ''
+        ELSE 1
+    END AS NAME_INFO_TYPE, -- Поле пустое
     '' AS FAMILY_NAME, -- Поле пустое
     '' AS GIVEN_NAME, -- Можно предположить, что FIO содержит полное имя
     '' AS INITIAL_NAME, -- Поле пустое
-    u.fio AS UNSTRUCT_NAME, -- Используем FIO как неструктурированное имя
+    CASE 
+        WHEN u.paket = 107 THEN ''
+        ELSE u.fio
+    END AS UNSTRUCT_NAME, -- Используем FIO как неструктурированное имя
     '' AS BIRTH_DATE, -- Поле Дата рождения
-    1 AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
+    CASE 
+        WHEN u.paket = 107 THEN ''
+        ELSE 1
+    END AS IDENT_CARD_TYPE_ID, -- Поле ИД типа документа
     CASE
     	WHEN COALESCE(dv_serial.field_value, '') = '' THEN 1
     	ELSE 0
@@ -37,10 +50,14 @@ SELECT DISTINCT
     	WHEN COALESCE(dv_serial.field_value, '') = '' THEN 'данные отсутствуют'
     	ELSE ''
     END  AS IDENT_CARD_UNSTRUCT, -- Поле пустое
+    
     '' AS BANK, -- Статическое значение банка
     '' AS BANK_ACCOUNT, -- Статическое значение банковского счета
-    '' AS FULL_NAME, -- Используем FIO как полное имя
-    '' AS INN, -- Поле пустое
+    CASE 
+        WHEN u.paket = 107 THEN u.fio
+        ELSE ''
+    END  AS FULL_NAME, -- Используем FIO как полное имя
+    COALESCE(dv_inn.field_value, '') AS INN, -- Поле пустое
     '' AS CONTACT, -- Поле пустое
     '' AS PHONE_FAX, -- Поле пустое
     0 AS STATUS, -- Статическое значение статуса
@@ -54,13 +71,15 @@ FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM 
-    user_grppack gp, fullusers u
+   user_grppack gp, fullusers u
 LEFT JOIN 
     dopvalues dv_serial ON dv_serial.dopfield_id = 11133 and dv_serial.parent_id = u.id AND dv_serial.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11133 and parent_id = u.id )
 LEFT JOIN 
     dopvalues dv_number ON dv_number.dopfield_id = 11134 and dv_number.parent_id = u.id AND dv_number.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11134 and parent_id = u.id )
 LEFT JOIN 
     dopvalues dv_descript ON dv_descript.dopfield_id = 11135 and dv_descript.parent_id = u.id AND dv_descript.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11135 and parent_id = u.id )
+LEFT JOIN 
+    dopvalues dv_inn ON dv_inn.dopfield_id = 11136 and dv_inn.parent_id = u.id AND dv_inn.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11136 and parent_id = u.id )
 WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')
     AND gp.id in (13,18) AND u.contract_date > 694161103 AND u.contract_date < 2524545103;
 " > /var/lib/mysql-files/query.sql
