@@ -56,12 +56,11 @@ LINES TERMINATED BY '\n'
 FROM 
     user_grppack gp, fullusers u
 LEFT JOIN 
-    dopvalues dv_serial ON dv_serial.dopfield_id = 11133 and dv_serial.parent_id = u.id
+    dopvalues dv_serial ON dv_serial.dopfield_id = 11133 and dv_serial.parent_id = u.id AND dv_serial.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11133 and parent_id = u.id )
 LEFT JOIN 
-    dopvalues dv_number ON dv_number.dopfield_id = 11134 and dv_number.parent_id = u.id
+    dopvalues dv_number ON dv_number.dopfield_id = 11134 and dv_number.parent_id = u.id AND dv_number.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11134 and parent_id = u.id )
 LEFT JOIN 
-    dopvalues dv_descript ON dv_descript.dopfield_id = 11135 and dv_descript.parent_id = u.id
-
+    dopvalues dv_descript ON dv_descript.dopfield_id = 11135 and dv_descript.parent_id = u.id AND dv_descript.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11135 and parent_id = u.id )
 WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')
     AND gp.id in (13,18) AND u.contract_date > 694161103 AND u.contract_date < 2524545103;
 " > /var/lib/mysql-files/query.sql
