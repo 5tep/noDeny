@@ -26,7 +26,7 @@ SELECT DISTINCT
     u.id AS ABONENT_ID,
     4 AS REGION_ID,
     0 AS ADDRESS_TYPE_ID,  -- Фиксированное значение
-    1 AS ADDRESS_TYPE,     -- Фиксированное значение
+    0 AS ADDRESS_TYPE,     -- Фиксированное значение
     '' AS ZIP,             -- Пустое поле, значение не указано
     'Российская Федерация' AS COUNTRY,  -- Статическое значение для страны
     'Херсонская область' AS REGION,    -- Регион из таблицы улиц
