@@ -70,7 +70,7 @@ SELECT
     '' AS DONATED_INTERNAL_ID2,  -- Пустое поле
     '' AS CARD_NUMBER,  -- Пустое поле
     '' AS PAY_PARAMS,  -- Пустое поле
-    '' AS PERSON_RECIEVED,  -- Пустое поле
+    u.fio AS PERSON_RECIEVED,  -- Получатель	платежа	(ФИО	и	прочая	неструктурированная	информация)
     '' AS BANK_DIVISION_NAME,  -- Пустое поле
     '' AS BANK_CARD_ID,  -- Пустое поле
     '' AS ADDRESS_TYPE_ID,  -- Пустое поле
