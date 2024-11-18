@@ -63,7 +63,7 @@ SELECT
     '' AS LATITUDE,  -- Пустое поле
     '' AS LONGITUDE,  -- Пустое поле
     '' AS PROJECTION_TYPE,  -- Пустое поле
-    1 AS CENTER_ID,  -- Пустое поле
+    gp.id AS CENTER_ID,  -- Пустое поле
     '' AS DONATED_PHONE_NUMBER,  -- Пустое поле
     '' AS DONATED_ACCOUNT,  -- Пустое поле
     '' AS DONATED_INTERNAL_ID1,  -- Пустое поле
