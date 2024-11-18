@@ -63,20 +63,20 @@ SELECT
     '' AS LATITUDE,  -- Пустое поле
     '' AS LONGITUDE,  -- Пустое поле
     '' AS PROJECTION_TYPE,  -- Пустое поле
-    '' AS CENTER_ID,  -- Пустое поле
+    1 AS CENTER_ID,  -- Пустое поле
     '' AS DONATED_PHONE_NUMBER,  -- Пустое поле
     '' AS DONATED_ACCOUNT,  -- Пустое поле
     '' AS DONATED_INTERNAL_ID1,  -- Пустое поле
     '' AS DONATED_INTERNAL_ID2,  -- Пустое поле
     '' AS CARD_NUMBER,  -- Пустое поле
     '' AS PAY_PARAMS,  -- Пустое поле
-    u.fio AS PERSON_RECIEVED,  -- Получатель	платежа	(ФИО	и	прочая	неструктурированная	информация)
+    '' AS PERSON_RECIEVED,  -- Получатель	платежа	(ФИО	и	прочая	неструктурированная	информация)
     '' AS BANK_DIVISION_NAME,  -- Пустое поле
     '' AS BANK_CARD_ID,  -- Пустое поле
-    '' AS ADDRESS_TYPE_ID,  -- Пустое поле
-    '' AS ADDRESS_TYPE,  -- Пустое поле
+    0 AS ADDRESS_TYPE_ID,  -- Пустое поле
+    1 AS ADDRESS_TYPE,  -- Пустое поле
     '' AS ZIP,  -- Пустое поле
-    'Российская Федерация' AS COUNTRY,  -- Пример статического значения
+    '' AS COUNTRY,  -- Пример статического значения
     '' AS REGION,  -- Пустое поле
     '' AS ZONE,  -- Пустое поле
     '' AS CITY,  -- Пустое поле
@@ -84,7 +84,10 @@ SELECT
     '' AS BUILDING,  -- Пустое поле
     '' AS BUILD_SECT,  -- Пустое поле
     '' AS APARTMENT,  -- Пустое поле
-    '' AS UNSTRUCT_INFO,  -- Пустое поле
+    CASE 
+        WHEN gp.id = 13 THEN 'Российская Федерация, Херсонская Область, Каховксий район, Каховка, улица Ленина. 15'
+        ELSE 'Российская Федерация, Херсонская Область, Новокаховский район, Таврийск, улица И. Франка, 15'
+    END AS UNSTRUCT_INFO,  -- Пустое поле
     4 AS REGION_ID  -- Пример статического значения
 INTO OUTFILE '/var/lib/mysql-files/PAYMENT_$current_date.txt'
 FIELDS TERMINATED BY ';' 
