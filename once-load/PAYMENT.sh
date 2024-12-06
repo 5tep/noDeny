@@ -48,7 +48,7 @@ UNION ALL
 SELECT 
     83 AS PAYMENT_TYPE,  -- Задано статически
     1 AS PAY_TYPE_ID,
-    FROM_UNIXTIME(time, '%Y-%m-%d 00:00:00') AS PAYMENT_DATE,
+    FROM_UNIXTIME(time, '%Y-%m-%d %h:%i:%s') AS PAYMENT_DATE,
     p.cash AS AMOUNT,
     '' AS AMOUNT_CURRENCY,  -- Пустое поле
     '' AS PHONE_NUMBER,  -- Информация о номере телефона отсутствует в этой таблице
