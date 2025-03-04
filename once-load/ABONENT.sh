@@ -34,7 +34,7 @@ SELECT DISTINCT
         WHEN u.paket = 107 THEN ''
         ELSE u.fio
     END AS UNSTRUCT_NAME, -- Используем FIO как неструктурированное имя
-    '' AS BIRTH_DATE, -- Поле Дата рождения
+    COALESCE(dv_born.field_value, '') AS BIRTH_DATE, -- Поле Дата рождения
     CASE 
         WHEN u.paket = 107 THEN ''
         ELSE 1
@@ -72,6 +72,8 @@ OPTIONALLY ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 FROM 
    user_grppack gp, fullusers u
+LEFT JOIN 
+    dopvalues dv_born ON dv_born.dopfield_id = 11137 and dv_born.parent_id = u.id AND dv_born.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11137 and parent_id = u.id )
 LEFT JOIN 
     dopvalues dv_serial ON dv_serial.dopfield_id = 11133 and dv_serial.parent_id = u.id AND dv_serial.revision = (SELECT max(revision) FROM dopvalues WHERE dopfield_id = 11133 and parent_id = u.id )
 LEFT JOIN 
