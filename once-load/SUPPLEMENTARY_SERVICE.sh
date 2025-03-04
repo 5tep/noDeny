@@ -28,8 +28,5 @@ WHERE name != '';
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных
-mysql -u asdf -ptD44vTG59d big_nodeny < /var/lib/mysql-files/query.sql
+mysql < /var/lib/mysql-files/query.sql
 
-# Перенос файлов, подчищаем за собой
-mv -f /var/lib/mysql-files/SUPPLEMENTARY_SERVICE* /home/ma43152/COPM/files
-rm -f /var/lib/mysql-files/query.sql
