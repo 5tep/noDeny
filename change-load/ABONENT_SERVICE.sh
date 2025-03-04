@@ -34,8 +34,6 @@ WHERE gp.pack_grps like CONCAT('%,', u.grp, ',%')
 " > /var/lib/mysql-files/query.sql
 
 # Выполнение завроса в базе данных
-mysql -u asdf -ptD44vTG59d big_nodeny < /var/lib/mysql-files/query.sql
+mysql < /var/lib/mysql-files/query.sql
 
-# Перенос файлов, подчищаем за собой
-mv -f /var/lib/mysql-files/ABONENT_SERVICE_* /home/ma43152/COPM/files
-rm -f /var/lib/mysql-files/query.sql
+
